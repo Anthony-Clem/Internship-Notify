@@ -5,8 +5,6 @@ from mailer import send_email
 def run():
     print("🔍 Checking for new internships...")
     init_db()
-
-    clear_listings()
     
     md_content = fetch_readme()
     listings = extract_listings(md_content)
