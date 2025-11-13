@@ -1,0 +1,31 @@
+services:
+  db:
+    image: postgres:16
+    container_name: internship_notify_db
+    restart: always
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: password
+      POSTGRES_DB: internship_notify_db
+    ports:
+      - "5432:5432"
+    volumes:
+      - internship_notify:/var/lib/postgresql/data
+
+  app:
+    build: .
+    container_name: internship_tracker_app
+    environment:
+      - DATABASE_URL=postgresql://postgres:password@localhost:5432/internship_notify_db
+      - SMTP_HOST=${SMTP_HOST}
+      - SMTP_PORT=${SMTP_PORT}
+      - SSL_MODE=${SSL_MODE}
+      - EMAIL_USER=${EMAIL_USER}
+      - EMAIL_PASS=${EMAIL_PASS}
+      - EMAIL_FROM=${EMAIL_FROM}
+      - EMAIL_TO=${EMAIL_TO}
+    depends_on:
+      - db
+
+volumes:
+  internship_notify:
