@@ -1,10 +1,12 @@
-from db import init_db, get_existing_listings, insert_new_listings
+from db import init_db, get_existing_listings, insert_new_listings, clear_listings
 from fetcher import fetch_readme, extract_listings
 from mailer import send_email
 
 def run():
     print("🔍 Checking for new internships...")
     init_db()
+
+    clear_listings()
     
     md_content = fetch_readme()
     listings = extract_listings(md_content)

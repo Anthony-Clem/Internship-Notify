@@ -43,3 +43,9 @@ def insert_new_listings(listings):
             except Exception as e:
                 print(f"Failed to insert {l['company']} | {l['role']}: {e}")
         conn.commit()
+
+def clear_listings():
+    with get_connection() as conn, conn.cursor() as cur:
+        cur.execute("TRUNCATE TABLE listings;")
+        conn.commit()
+
